@@ -1,18 +1,13 @@
 defmodule Spellbind do
-  @moduledoc """
-  Documentation for `Spellbind`.
-  """
+  @moduledoc false
 
-  @doc """
-  Hello world.
+  alias Spellbind.AST
+  alias Spellbind.Lexer
 
-  ## Examples
-
-      iex> Spellbind.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  @spec parse(String.t()) :: {:ok, AST.t()} | {:error, term}
+  def parse(input) when is_binary(input) do
+    with {:ok, tokens} <- Lexer.tokenize(input) do
+      AST.parse(tokens)
+    end
   end
 end
